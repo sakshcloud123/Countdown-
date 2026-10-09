@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Little Story 🎂</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  padding:15px;
+  min-height:100vh;
+  font-family:Georgia,serif;
+  background:linear-gradient(145deg,#ffd6e7,#e6d5ff);
+  color:#76274f;
+}
+.card{
+  width:100%;
+  max-width:420px;
+  margin:0 auto;
+  padding:22px 16px;
+  background:#fffafc;
+  border-radius:23px;
+  text-align:center;
+  box-shadow:0 8px 25px #8a467733;
+}
+h1{font-size:26px;margin:12px 0}
+h2{font-size:20px;margin:12px 0}
+p{font-size:15px;line-height:1.6}
+.divider{border:0;border-top:1px dashed #e7a9c6;margin:22px 0}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  margin:16px 0;
+}
+.box{
+  background:#ffedf5;
+  padding:12px 4px;
+  border-radius:13px;
+  min-width:0;
+}
+.num{
+  font-size:clamp(22px,6vw,30px);
+  font-weight:bold;
+  overflow-wrap:anywhere;
+  color:#c13578;
+}
+.label{font-size:12px;margin-top:5px}
+.meeting{
+  background:#f3edff;
+  border-radius:14px;
+  padding:13px 8px;
+}
+button{
+  width:100%;
+  padding:13px 8px;
+  margin-top:12px;
+  border:0;
+  border-radius:24px;
+  background:#c13578;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+}
+#secret{
+  display:none;
+  background:#fff0f6;
+  padding:13px;
+  border-radius:14px;
+  margin-top:15px;
+}
+.small{font-size:12px;color:#9b6b85}
+</style>
+</head>
+
+<body>
+<div class="card">
+
+  <div style="font-size:38px">🎂 🎈</div>
+  <h1>Chinmay's Birthday!</h1>
+  <p>Oiii mister, your special day is getting closer! 😏</p>
+
+  <hr class="divider">
+
+  <h2>🎂 Birthday Countdown</h2>
+  <p>Counting every second until October 12!</p>
+
+  <div class="grid">
+    <div class="box"><div class="num" id="days">0</div><div class="label">DAYS</div></div>
+    <div class="box"><div class="num" id="hours">00</div><div class="label">HOURS</div></div>
+    <div class="box"><div class="num" id="minutes">00</div><div class="label">MINUTES</div></div>
+    <div class="box"><div class="num" id="seconds">00</div><div class="label">SECONDS</div></div>
+  </div>
+
+  <p id="birthdayMessage">Your countdown is running! ✨</p>
+
+  <hr class="divider">
+
+  <h2>🫶 Since We First Met</h2>
+  <p>15 May 2023 — the beginning of a special memory.</p>
+
+  <div class="meeting">
+    <p><b>Look how much time has passed!</b></p>
+    <div class="num" id="totalDays">0</div>
+    <div class="label">TOTAL DAYS</div>
+
+    <div class="num" id="totalHours">0</div>
+    <div class="label">TOTAL HOURS</div>
+
+    <div class="num" id="totalMinutes">0</div>
+    <div class="label">TOTAL MINUTES</div>
+  </div>
+
+  <hr class="divider">
+
+  <h2>😏 Want your next surprise?</h2>
+  <p>There's one more little message waiting for you!</p>
+
+  <button onclick="revealSecret()">
+    NEXT SURPRISE ↓ 🎁
+  </button>
+
+  <div id="secret">
+    <h2>A Little Message For You 💌</h2>
+    <p>
+      Chinmay, our first meeting on 15 May 2023
+      became a special part of my story.<br><br>
+
+      We've shared memories, smiles, silly moments
+      and so many things along the way.<br><br>
+
+      Before your birthday arrives, I just want
+      you to know that I hope this new year of
+      your life brings you happiness, success,
+      peace and everything you've wished for.<br><br>
+
+      And don't get too proud after reading this! 😂
+      You're still the same annoying person I love
+      teasing!<br><br>
+
+      Happy almost-birthday, birthday boy! 🎂✨
+    </p>
+  </div>
+
+  <button onclick="location.href='index.html'">
+    ↩ BACK TO THE FIRST PAGE
+  </button>
+
+  <p class="small">A little surprise made especially for you ✨</p>
+
+</div>
+
+<script>
+function getNextBirthday(){
+  const now = new Date();
+  let target = new Date(now.getFullYear(), 9, 12, 0, 0, 0);
+
+  if(target <= now){
+    target = new Date(now.getFullYear()+1, 9, 12, 0, 0, 0);
+  }
+  return target;
+}
+
+const firstMeeting = new Date(2023, 4, 15, 0, 0, 0);
+
+function update(){
+  const now = new Date();
+  const diff = getNextBirthday() - now;
+
+  if(diff <= 0){
+    document.getElementById("birthdayMessage").textContent =
+      "HAPPY BIRTHDAY, CHINMAY! 🎂🎉";
+    ["days","hours","minutes","seconds"].forEach(id =>
+      document.getElementById(id).textContent = "0"
+    );
+  }else{
+    document.getElementById("days").textContent =
+      Math.floor(diff/86400000);
+
+    document.getElementById("hours").textContent =
+      String(Math.floor(diff/3600000)%24).padStart(2,"0");
+
+    document.getElementById("minutes").textContent =
+      String(Math.floor(diff/60000)%60).padStart(2,"0");
+
+    document.getElementById("seconds").textContent =
+      String(Math.floor(diff/1000)%60).padStart(2,"0");
+  }
+
+  const elapsed = Math.max(0,now-firstMeeting);
+
+  document.getElementById("totalDays").textContent =
+    Math.floor(elapsed/86400000).toLocaleString();
+
+  document.getElementById("totalHours").textContent =
+    Math.floor(elapsed/3600000).toLocaleString();
+
+  document.getElementById("totalMinutes").textContent =
+    Math.floor(elapsed/60000).toLocaleString();
+}
+
+function revealSecret(){
+  const secret = document.getElementById("secret");
+  secret.style.display = "block";
+  secret.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+update();
+setInterval(update,1000);
+</script>
+
+</body>
+</html>
